@@ -6,7 +6,7 @@ const Modal = ({ isOpen, onClose, videoSrc }) => {
 
     return (
         <div className=" relative inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-            <div className="bg-white p-6 max-w-screen-md rounded-lg overflow-hidden container mx-auto h-[340px] w-[520px] absolute bottom-20 left-80">
+            <div className="bg-white p-6 max-w-screen-md rounded-lg overflow-hidden container mx-auto h-[340px] w-[520px]  absolute bottom-20 left-80">
                 <button
                     className="absolute text-white top-0 right-0 z-50"
                     onClick={onClose}
