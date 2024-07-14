@@ -1,4 +1,4 @@
-import React from 'react';
+
 import serviceImg from '../../../assets/img/services/service-pic.jpg';
 import icon1 from '../../../assets/img/services/service-icon-1.png';
 import icon2 from '../../../assets/img/services/service-icon-2.png';
