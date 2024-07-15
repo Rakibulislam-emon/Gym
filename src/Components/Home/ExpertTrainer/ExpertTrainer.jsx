@@ -25,7 +25,7 @@ export default function ExpertTrainer() {
     ];
 
     return (
-        <div className="px-4 md:px-8 lg:px-16 bg-[#f5f5f5] pt-10 mt-10 pb-40">
+        <div className="px-4 md:px-8 lg:px-16 bg-[#f5f5f5] pt-10  pb-40">
             <h1 className="text-5xl font-bold text-center my-20">Expert Trainer</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {data.map((item, idx) => (

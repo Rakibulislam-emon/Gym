@@ -98,7 +98,7 @@ export default function TestSlides() {
     ];
 
     return (
-        <div className="slider-container mt-96 md:mt-60 lg:mt-20 max-w-full overflow-x-hidden">
+        <div className="slider-container mb-10 mt-96 md:mt-60 lg:mt-20 max-w-full overflow-x-hidden">
             <h2 className="text-3xl font-bold text-center mb-8">UNLIMITED CLASSES</h2>
             <Slider {...settings}>
                 {data.map((item, index) => (

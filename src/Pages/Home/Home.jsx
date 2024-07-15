@@ -8,6 +8,7 @@ import ContactNow from "../../Components/Home/ContactNow/ContactNow";
 import Membership from "../../Components/Home/Membership/Membership";
 import RegisterNow from "../../Components/Home/RegisterNow/RegisterNow";
 import LeatestBlog from "../../Components/Home/LeatestBlog/LeatestBlog";
+import FooterBg from "../../Components/Home/FooterBg/FooterBg";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <Membership/>
       <RegisterNow/>
       <LeatestBlog/>
+      <FooterBg/>
     </div>
   )
 }
