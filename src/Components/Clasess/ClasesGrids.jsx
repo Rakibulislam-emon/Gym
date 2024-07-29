@@ -1,0 +1,78 @@
+import classes1 from '../../assets/img/classes/classes-1.jpg'
+import classes2 from '../../assets/img/classes/classes-2.jpg';
+import classes3 from '../../assets/img/classes/classes-3.jpg';
+import classes4 from '../../assets/img/classes/classes-4.jpg';
+import classes5 from '../../assets/img/classes/classes-5.jpg';
+import classes6 from '../../assets/img/classes/classes-6.jpg';
+import classes7 from '../../assets/img/classes/classes-7.jpg';
+import classes8 from '../../assets/img/classes/classes-8.jpg';
+// import classes9 from '../../assets/img/classes/classes-9.jpg';
+
+export default function ClasesGrids() {
+    const data = [
+        {
+            img: classes1,
+            title: "Yoga & Pilates",
+            desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        },
+        {
+            img: classes2,
+            title: "Boxing & MMA",
+            desc: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        },
+        {
+            img: classes3,
+            title: "Dance & Choreography",
+            desc: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        },
+        {
+            img: classes4,
+            title: "Meditation & Mindfulness",
+            desc: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        },
+        {
+            img: classes5,
+            title: "Meditation & Mindfulness",
+            desc: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        },
+        {
+            img: classes6,
+            title: "Meditation & Mindfulness",
+            desc: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        },
+        {
+            img: classes7,
+            title: "Meditation & Mindfulness",
+            desc: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        },
+        {
+            img: classes8,
+            title: "Meditation & Mindfulness",
+            desc: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        },
+       
+    ];
+    return (
+        <div >
+            <h2 className="text-5xl font-bold text-center mb-8">UNLIMITED CLASSES</h2>
+            <div className='lg:grid grid-cols-4 '>
+                {data.map((data, idx) => <div key={idx} className="card-container mb-10  md:mt-60 lg:mt-20 max-w-full overflow-x-hidden">
+                    <div className="flex justify-center items-center">
+                        <div className="relative max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+                            <img
+                                className="w-full h-auto rounded-lg"
+                                src={data.img} // Assuming you want to show the first item from the data array
+                                alt={data.title}
+                            />
+                            <div className="absolute bottom-0 w-full bg-black bg-opacity-50 text-white p-4 rounded-lg">
+                                <h2 className="text-lg font-bold">{data.title}</h2>
+                                <p className="text-sm">{data.desc}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>)
+                }
+            </div>
+        </div>
+    )
+}
