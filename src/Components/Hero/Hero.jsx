@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import hero from '../../assets/img/hero-bg.jpg';
 import Buttons from '../../Shared/Buttons/Buttons';
 
@@ -15,7 +16,7 @@ export default function Hero() {
                     <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl   whitespace-nowrap  font-bold ">BMI CALCULATOR</h1>
                     <p>Gutim comes packed with the user-friendly BMI Calculator
                     shortcode which lets</p>
-                    <Buttons text={'Read More'} />
+                    <Link to={'/login'}><Buttons text={'Read More'} /></Link>
                 </div>
             </div>
         </div>

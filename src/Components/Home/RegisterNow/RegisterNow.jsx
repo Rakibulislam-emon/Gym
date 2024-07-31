@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import register from '../../../assets/img/register-pic.jpg';
 
 export default function RegisterNow() {
@@ -79,10 +80,10 @@ export default function RegisterNow() {
                                 </a>
                             </div>
                             <div className="text-center">
-                                <a className="inline-block text-sm text-blue-500 dark:text-blue-500 align-baseline hover:text-blue-800"
-                                    href="./index.html">
+                                <Link to={'/login'} className="inline-block text-sm text-blue-500 dark:text-blue-500 align-baseline hover:text-blue-800"
+                                    >
                                     Already have an account? Login!
-                                </a>
+                                </Link>
                             </div>
                         </form>
                     </div>

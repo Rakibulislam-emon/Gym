@@ -5,34 +5,47 @@ import About from "../Pages/About/About";
 import Classes from "../Pages/Classes/Classes";
 import Blog from "../Pages/Blog/Blog";
 import Contact from "../Pages/Contact/Contact";
+import Login from "../Authentication/Login";
+import RegisterNow from "../Components/Home/RegisterNow/RegisterNow";
 
 export const route = createBrowserRouter([
     {
         path: "/",
         element: <Main />,
         children: [
+            
             {
                 path: "/",
                 element: <Home />
             },
             {
                 path: "/about",
-                element: <About/>
+                element: <About />
             },
             {
                 path: "/classes",
-                element: <Classes/>
+                element: <Classes />
             },
             {
-                path: "/Blog",
-                element: <Blog/>
+                path: "/blog",
+                element: <Blog />
             },
-         
+
             {
                 path: "/contact",
-                element: <Contact/>
+                element: <Contact />
             },
+            
+
         ]
+    },
+    {
+        path: '/login',
+        element: <Login />
+    },
+    {
+        path: '/register',
+        element: <RegisterNow/>
     },
 
 ])

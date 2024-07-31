@@ -15,8 +15,8 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function TestSlides() {
     const settings = {
-        dots: true,
-        infinite: false,
+        // dots: true,
+        infinite: true,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 4,
