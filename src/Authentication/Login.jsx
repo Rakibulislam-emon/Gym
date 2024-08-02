@@ -1,6 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import useAuth from "../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 export default function Login() {
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+  const [rememberMe, setRememberMe] = useState(false);
+
+  // handle login 
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    
+    // Ensure rememberMe checkbox is set correctly
+    if (!rememberMe) {
+      toast.error('Please check the "Remember Me" box if you want to stay signed in.');
+      return;
+    }
+
+    const userInfo = {
+      email,
+      password,
+    };
+    console.log('User Info:', userInfo);
+
+    try {
+      await signIn(email, password);
+      toast.success('Logged in successfully');
+      navigate('/');
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    }
+  };
+
   return (
     <div className="font-[sans-serif]">
       <div className="grid lg:grid-cols-2 md:grid-cols-2 items-center gap-4">
@@ -8,10 +43,10 @@ export default function Login() {
           <img src="https://readymadeui.com/image-3.webp" className="w-full h-full object-cover" alt="login-image" />
         </div>
 
-        <form className="max-w-xl w-full p-6 mx-auto">
+        <form onSubmit={handleLogin} className="max-w-xl w-full p-6 mx-auto">
           <div className="mb-12">
             <h3 className="text-gray-800 text-4xl font-extrabold">Sign in</h3>
-            <p className="text-gray-800 text-sm mt-6">Don t have an account <Link to={'/register'} className="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">Register here</Link></p>
+            <p className="text-gray-800 text-sm mt-6">Don’t have an account <Link to={'/register'} className="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">Register here</Link></p>
           </div>
 
           <div>
@@ -44,20 +79,20 @@ export default function Login() {
 
           <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
             <div className="flex items-center">
-              <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
+              <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" onChange={() => setRememberMe(!rememberMe)} />
               <label htmlFor="remember-me" className="ml-3 block text-sm text-gray-800">
                 Remember me
               </label>
             </div>
             <div>
-              <a href="jajvascript:void(0);" className="text-blue-600 font-semibold text-sm hover:underline">
+              <a className="text-blue-600 font-semibold text-sm hover:underline">
                 Forgot Password?
               </a>
             </div>
           </div>
 
           <div className="mt-12">
-            <button type="button" className="w-full py-2.5 px-4 text-sm tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+            <button type="submit" className="w-full py-2.5 px-4 text-sm tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
               Sign in
             </button>
           </div>
@@ -77,22 +112,16 @@ export default function Login() {
                 d="m256 392-60 60 60 60c57.079 0 111.297-18.568 155.785-52.823v-86.216h-86.216C305.044 385.147 281.181 392 256 392z"
                 data-original="#0f9d58" />
               <path fill="#31aa52"
-                d="m139.131 325.477-86.308 86.308a260.085 260.085 0 0 0 22.158 25.235C123.333 485.371 187.62 512 256 512V392c-49.624 0-93.117-26.72-116.869-66.523z"
+                d="M256 392v-80.93L362.569 304 256 296.842v-86.216h86.216l69.477-34.738 60-60-60-60C367.297 18.568 313.078 0 256 0c-30.653 0-60.444 5.672-88.846 16.89L120 120.215c14.134-14.135 33.73-21.611 54.215-21.611C236.86 98.604 264 125.744 264 158.66c0 20.485-7.476 40.081-21.611 54.215-13.919 13.919-32.057 21.611-54.215 21.611v86.216H248.931V392z"
                 data-original="#31aa52" />
               <path fill="#3c79e6"
-                d="M512 256a258.24 258.24 0 0 0-4.192-46.377l-2.251-12.299H256v120h121.452a135.385 135.385 0 0 1-51.884 55.638l86.216 86.216a260.085 260.085 0 0 0 25.235-22.158C485.371 388.667 512 324.38 512 256z"
+                d="M256 296.842h86.216l69.477-34.738V120.215c-44.488-34.255-98.706-52.823-155.785-52.823V120c29.86 0 54.303 24.443 54.303 54.303 0 29.86-24.443 54.303-54.303 54.303V296.842z"
                 data-original="#3c79e6" />
-              <path fill="#cf2d48"
-                d="m352.167 159.833 10.606 10.606 84.853-84.852-10.606-10.606C388.668 26.629 324.381 0 256 0l-60 60 60 60c36.326 0 70.479 14.146 96.167 39.833z"
-                data-original="#cf2d48" />
-              <path fill="#eb4132"
-                d="M256 120V0C187.62 0 123.333 26.629 74.98 74.98a259.849 259.849 0 0 0-22.158 25.235l86.308 86.308C162.883 146.72 206.376 120 256 120z"
-                data-original="#eb4132" />
             </svg>
-            Continue with google
+            <span className="block">Sign in with Google</span>
           </button>
         </form>
       </div>
     </div>
-  )
+  );
 }

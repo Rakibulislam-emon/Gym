@@ -1,4 +1,26 @@
+import { Link } from "react-router-dom";
+import useAxios from "../../../Hooks/useAxios";
+import useAuth from "../../../Hooks/useAuth";
+
 export default function Membership() {
+    const {user} = useAuth()
+    console.log('user:', user)
+    const axios = useAxios()
+    const handleSubscription =async (amount) => {
+        const parsIntAmount =parseInt(amount);
+        try {
+            const details = {
+                userEmail: user?.email,
+                amount: parsIntAmount,
+
+            }
+            const res = await axios.post('subscriptions',details)
+            console.log('response:', res.data)
+        } catch (error) {
+            console.log('error:', error)
+            
+        }
+    }
     return (
         <div className="px-4 py-16">
             <div className="absolute inset-0 h-max w-full m-auto grid grid-cols-2 -space-x-52 opacity-20">
@@ -22,14 +44,14 @@ export default function Membership() {
                             <li>Basic fitness programs</li>
                             <li>Limited personal training sessions</li>
                         </ul>
-                        <a
-                            target="_blank"
+                        <Link
+                            onClick={() => handleSubscription('19')}
+                            to={'/payment'}
                             rel="noopener noreferrer"
-                            className="lemonsqueezy-button relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-                            href="https://example.com/starter-plan"
+                            className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
                         >
                             <span className="relative text-sm font-semibold text-black">Get Started</span>
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex flex-col items-center aspect-auto p-4 sm:p-8 border rounded-3xl bg-gray-800 border-gray-700 shadow-gray-600/10 shadow-none m-2 flex-1 max-w-md">
                         <h2 className="text-lg sm:text-xl font-medium text-white mb-2">Pro</h2>
@@ -42,14 +64,14 @@ export default function Membership() {
                             <li>Advanced fitness programs</li>
                             <li>Unlimited personal training sessions</li>
                         </ul>
-                        <a
-                            target="_blank"
+                        <Link
+                            onClick={() => handleSubscription('49')}
+                            to={'/payment'}
                             rel="noopener noreferrer"
-                            className="lemonsqueezy-button relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-                            href="https://example.com/pro-plan"
+                            className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
                         >
                             <span className="relative text-sm font-semibold text-black">Get Started</span>
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex flex-col items-center aspect-auto p-4 sm:p-8 border rounded-3xl bg-gray-800 border-gray-700 shadow-gray-600/10 shadow-none m-2 flex-1 max-w-md">
                         <h2 className="text-lg sm:text-xl font-medium text-white mb-2">Business</h2>
@@ -62,14 +84,13 @@ export default function Membership() {
                             <li>Custom fitness programs</li>
                             <li>Dedicated corporate support</li>
                         </ul>
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="lemonsqueezy-button relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
-                            href="https://example.com/business-plan"
+                        <Link
+                            onClick={() => handleSubscription('99')}
+                            to={'/payment'}
+                            className="relative flex h-9 w-full items-center justify-center px-4 before:absolute before:inset-0 before:rounded-full before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 sm:w-max"
                         >
                             <span className="relative text-sm font-semibold text-black">Get Started</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

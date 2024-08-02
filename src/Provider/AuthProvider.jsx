@@ -11,6 +11,8 @@ import {
     signOut,
     updateProfile,
 } from 'firebase/auth'
+import toast from 'react-hot-toast';
+
 // import axios from 'axios'
 // import { auth } from '../Firebase/firebase.config'
 
@@ -23,7 +25,6 @@ const AuthProvider = ({ children }) => {
     // const axiosCommon= useAxiosCommon()
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
-
     const createUser = (email, password) => {
         setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
@@ -43,7 +44,12 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         return sendPasswordResetEmail(auth, email)
     }
+     const logout = () => {
+        setLoading(true)
+        toast.success('logout successful')
 
+        return signOut(auth) 
+     }
     // const logOut = async () => {
     //     setLoading(true)
     //     await axios.get(`${''}/logout`, {
@@ -73,6 +79,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
+            console.log('currentUser:', currentUser)
             setLoading(false)
             // if (currentUser) {
             //     // get token and store client
@@ -95,7 +102,7 @@ const AuthProvider = ({ children }) => {
             return unsubscribe()
         }
     }, [])
-
+    console.log(user);
     const authInfo = {
         user,
         loading,
@@ -104,7 +111,7 @@ const AuthProvider = ({ children }) => {
         signIn,
         signInWithGoogle,
         resetPassword,
-        // logOut,
+        logout,
         updateUserProfile,
     }
 

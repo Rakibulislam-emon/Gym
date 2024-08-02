@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from "../../assets/img/logo.png";
+import useAuth from '../../Hooks/useAuth';
 
 export default function Navbar() {
+  const { user, logout } = useAuth()
+  console.log('user:', user)
   const [menuOpen, setMenuOpen] = useState(false);
+
   const navItems = [
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
@@ -12,9 +16,7 @@ export default function Navbar() {
     { label: 'Contact', path: '/contact' },
   ];
 
-  const check = () => {
-    console.log("Clicked");
-  };
+
 
   return (
     <nav className="top-0 py-1 lg:py-2 w-full fixed lg:relative z-50 dark:bg-gray-900">
@@ -35,12 +37,39 @@ export default function Navbar() {
             </ul>
           </div>
           <div className="hidden lg:flex lg:items-center gap-x-2">
-            <Link to="/register" className="flex items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
-              Sign up
-            </Link>
-            <Link to="/login" className="flex items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
-              Login
-            </Link>
+            {user ? (
+              <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="Profile"
+                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                >
+                  <li>
+                    <a>Dashboard</a>
+
+                  </li>
+                  <li>
+                    <a onClick={logout}>Logout</a>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <>
+                <Link to="/register" className="flex items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
+                  Sign up
+                </Link>
+                <Link to="/login" className="flex items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
+                  Login
+                </Link>
+              </>
+            )}
           </div>
           <div className="flex items-center justify-center lg:hidden">
             <button
@@ -77,12 +106,25 @@ export default function Navbar() {
                 <Link to={item.path}>{item.label}</Link>
               </li>
             ))}
-            <li className="flex items-center justify-center px-6 py-2.5 font-semibold">
-              <Link to="/register">Sign up</Link>
-            </li>
-            <li className="flex items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
-              <Link to="/login" onClick={check}>Login</Link>
-            </li>
+            {user ? (
+              <>
+                <li className="flex items-center justify-center px-6 py-2.5 font-semibold">
+                  <a>Dashboard</a>
+                </li>
+                <li className="flex items-center justify-center px-6 py-2.5 font-semibold">
+                  <a onClick={logout}>Logout</a>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="flex items-center justify-center px-6 py-2.5 font-semibold">
+                  <Link to="/register">Sign up</Link>
+                </li>
+                <li className="flex items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
+                  <Link to="/login" >Login</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

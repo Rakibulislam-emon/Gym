@@ -7,6 +7,7 @@ import Blog from "../Pages/Blog/Blog";
 import Contact from "../Pages/Contact/Contact";
 import Login from "../Authentication/Login";
 import RegisterNow from "../Components/Home/RegisterNow/RegisterNow";
+import Payment from "../Stripe/Payment";
 
 export const route = createBrowserRouter([
     {
@@ -35,17 +36,15 @@ export const route = createBrowserRouter([
                 path: "/contact",
                 element: <Contact />
             },
+            {
+                path: '/payment',
+                element: <Payment/>
+            }
             
 
         ]
     },
-    {
-        path: '/login',
-        element: <Login />
-    },
-    {
-        path: '/register',
-        element: <RegisterNow/>
-    },
+    { path: '/login',element: <Login />},
+    { path: '/register', element: <RegisterNow/>},
 
 ])
