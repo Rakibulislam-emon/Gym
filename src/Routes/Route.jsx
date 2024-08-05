@@ -8,6 +8,7 @@ import Contact from "../Pages/Contact/Contact";
 import Login from "../Authentication/Login";
 import RegisterNow from "../Components/Home/RegisterNow/RegisterNow";
 import Payment from "../Stripe/Payment";
+import PaymentSuccessful from "../Stripe/PaymentSuccessful";
 
 export const route = createBrowserRouter([
     {
@@ -39,7 +40,11 @@ export const route = createBrowserRouter([
             {
                 path: '/payment',
                 element: <Payment/>
-            }
+            },
+        {
+            path:'/payment-successful',
+            element:<PaymentSuccessful/>
+        }
             
 
         ]

@@ -1,7 +1,13 @@
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useEffect, useState } from 'react';
+import useAxios from '../Hooks/useAxios';
+import toast from 'react-hot-toast';
+// import PaymentSuccessful from './PaymentSuccessful';
 
-export default function CheckoutForm() {
+// eslint-disable-next-line react/prop-types
+export default function CheckoutForm({ info }) {
+    console.log('info:', info)
+    const axios = useAxios();
     const stripe = useStripe();
     const elements = useElements();
     const [message, setMessage] = useState(null);
@@ -9,54 +15,72 @@ export default function CheckoutForm() {
 
     useEffect(() => {
         if (!stripe) return;
-
+    
         const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-
         if (!clientSecret) return;
-
+    
         stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-            switch (paymentIntent.status) {
-                case "succeeded":
-                    setMessage("Payment succeeded!");
-                    break;
-                case "processing":
-                    setMessage("Your payment is processing.");
-                    break;
-                case "requires_payment_method":
-                    setMessage("Your payment was not successful, please try again.");
-                    break;
-                default:
-                    setMessage("Something went wrong.");
-                    break;
+            console.log('Payment Intent:', paymentIntent); // Log payment intent
+            if (paymentIntent.status === "succeeded") {
+                setMessage("Payment succeeded!");
+                // Show success toast
+                axios.post('subscriptions', info);
+                toast.success("Payment succeeded! Subscription info saved.");
+            } else if (paymentIntent.status === "processing") {
+                setMessage("Your payment is processing.");
+            } else if (paymentIntent.status === "requires_payment_method") {
+                setMessage("Your payment was not successful, please try again.");
+            } else {
+                setMessage("Something went wrong.");
             }
+        }).catch((error) => {
+            console.error('Error retrieving payment intent:', error);
+            setMessage("Error retrieving payment status.");
         });
-    }, [stripe]);
+    }, [axios, info, stripe]);
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!stripe || !elements) {
-            // Stripe.js hasn't yet loaded.
-            // Make sure to disable form submission until Stripe.js has loaded.
+            console.error("Stripe.js or Elements not loaded.");
             return;
         }
 
         setIsLoading(true);
 
-        const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-                return_url: "http://localhost:5173",
-            },
-        });
+        try {
+            console.log('Confirming payment...');
+          
+           const res = await axios.post('/subscriptions',{info})
+           console.log(res.data);
+           if(!res.data){
+            return toast.error('Something went wrong. Please try again');
+           }
+           console.log('reached');
+            // this code has problems with sending data to server and also with toast
 
-        if (error) {
-            setMessage(error.message);
-        } else {
+            const { error, paymentIntent } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: "http://localhost:5173/payment-successful",
+                },
+            });
+            console.log('Payment confirmed:', { error, paymentIntent });
+
+            if (error) {
+                console.error('Payment error:', error);
+                setMessage(error.message);
+                return;
+            }
+           
+        } catch (err) {
+            console.error('Unexpected Error:', err);
             setMessage("An unexpected error occurred.");
+        } finally {
+            setIsLoading(false);
         }
-
-        setIsLoading(false);
     };
 
     const paymentElementOptions = {
@@ -64,7 +88,7 @@ export default function CheckoutForm() {
     };
 
     return (
-       <main className='main'>
+        <main className='main'>
             <form id="payment-form" onSubmit={handleSubmit}>
                 <PaymentElement id="payment-element" options={paymentElementOptions} />
                 <button className='formBtn' disabled={isLoading || !stripe || !elements} id="submit">
@@ -72,6 +96,7 @@ export default function CheckoutForm() {
                 </button>
                 {message && <div id="payment-message">{message}</div>}
             </form>
-      </main>
+           {/* <div className='hidden'> <PaymentSuccessful info={info}/></div> */}
+        </main>
     );
 }
