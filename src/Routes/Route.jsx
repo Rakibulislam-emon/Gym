@@ -9,6 +9,7 @@ import Login from "../Authentication/Login";
 import RegisterNow from "../Components/Home/RegisterNow/RegisterNow";
 import Payment from "../Stripe/Payment";
 import PaymentSuccessful from "../Stripe/PaymentSuccessful";
+import BlogDetails from "../Components/Blog/BlogDetails";
 
 export const route = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ export const route = createBrowserRouter([
             {
                 path: "/blog",
                 element: <Blog />
+            },
+            {
+                path:'/blog/details',
+                element:<BlogDetails/>
             },
 
             {

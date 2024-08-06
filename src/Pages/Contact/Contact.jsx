@@ -4,18 +4,19 @@ export default function Contact() {
   return (
     <div>
 
-      <Hero/>
+      <Hero />
 
       <div id="map" className="relative w-full h-[600px] overflow-hidden bg-cover bg-[50%] bg-no-repeat">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14607.678391110547!2d90.38397440000001!3d23.750246399999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1722282435162!5m2!1sen!2sbd"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.006809313515!2d90.38324507570154!3d23.74713658890088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8ba44c5c169%3A0x6f65e74df564b0be!2sFlex%20Fitness!5e0!3m2!1sen!2sbd!4v1722966946050!5m2!1sen!2sbd"
           width="100%"
           height="600"
           style={{ border: '0' }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
+        >
+        </iframe>
       </div>
 
 
@@ -25,7 +26,7 @@ export default function Contact() {
         <div
           className="block rounded-lg bg-[hsla(0,0%,100%,0.8)] px-6 py-12 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]  md:py-16 md:px-12  backdrop-blur-[30px] ">
           <div className="flex flex-wrap">
-          <div className="w-full shrink-0 grow-0 basis-auto lg:w-7/12">
+            <div className="w-full shrink-0 grow-0 basis-auto lg:w-7/12">
               <div className="flex flex-wrap">
                 <div className="mb-12 w-full shrink-0 grow-0 basis-auto md:w-6/12 md:px-3 lg:w-full lg:px-6 xl:w-6/12">
                   <div className="flex items-start">
@@ -79,7 +80,7 @@ export default function Contact() {
                     <div className="shrink-0">
                       <div className="inline-block rounded-md bg-sky-200 p-4 text-primary">
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                           x="0px" y="0px" className="w-7 h-7"
+                          x="0px" y="0px" className="w-7 h-7"
                           viewBox="0 0 111.756 122.879" enableBackground="new 0 0 111.756 122.879" xmlSpace="preserve">
                           <g>
                             <path
@@ -157,7 +158,7 @@ export default function Contact() {
                 </button>
               </form>
             </div>
-            
+
           </div>
         </div>
       </div>
