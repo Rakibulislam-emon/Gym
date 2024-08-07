@@ -10,13 +10,15 @@ import RegisterNow from "../Components/Home/RegisterNow/RegisterNow";
 import Payment from "../Stripe/Payment";
 import PaymentSuccessful from "../Stripe/PaymentSuccessful";
 import BlogDetails from "../Components/Blog/BlogDetails";
+import Dashboard from "../Dashboard/Dashboard";
+import Profile from "../DBcomponents/Profile";
 
 export const route = createBrowserRouter([
     {
         path: "/",
         element: <Main />,
         children: [
-            
+
             {
                 path: "/",
                 element: <Home />
@@ -34,8 +36,8 @@ export const route = createBrowserRouter([
                 element: <Blog />
             },
             {
-                path:'/blog/details',
-                element:<BlogDetails/>
+                path: '/blog/details',
+                element: <BlogDetails />
             },
 
             {
@@ -44,17 +46,29 @@ export const route = createBrowserRouter([
             },
             {
                 path: '/payment',
-                element: <Payment/>
+                element: <Payment />
             },
-        {
-            path:'/payment-successful',
-            element:<PaymentSuccessful/>
-        }
-            
+            {
+                path: '/payment-successful',
+                element: <PaymentSuccessful />
+            }
+
 
         ]
     },
-    { path: '/login',element: <Login />},
-    { path: '/register', element: <RegisterNow/>},
+    // dashboard
+    {
+        path:"/dashboard",
+        element:<Dashboard/>,
+        children:[
+            {
+             path:'profile',
+             element:<Profile/>   
+            }
+        ]
+    },
+
+    { path: '/login', element: <Login /> },
+    { path: '/register', element: <RegisterNow /> },
 
 ])

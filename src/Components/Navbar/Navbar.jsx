@@ -39,11 +39,13 @@ export default function Navbar() {
           <div className="hidden lg:flex lg:items-center gap-x-2">
             {user ? (
               <>
-                  <Link  className="flex border items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
-                 Dashboard
+                <Link to={'/dashboard'} className="flex border items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
+                  Dashboard
                 </Link>
-                  <button  className="flex border items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
-                 Logout
+                <button
+                  onClick={logout}
+                  className="flex border items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
+                  Logout
                 </button>
               </>
 
@@ -52,7 +54,8 @@ export default function Navbar() {
                 <Link to="/register" className="flex items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
                   Sign up
                 </Link>
-                <Link to="/login" className="flex items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
+                <Link to="/login"
+                  className="flex items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
                   Login
                 </Link>
               </>
@@ -96,10 +99,10 @@ export default function Navbar() {
             {user ? (
               <>
                 <li className="flex items-center justify-center px-6 py-2.5 font-semibold">
-                  <a>Dashboard</a>
+                  <Link to={'/dashboard'}>Dashboard</Link>
                 </li>
                 <li className="flex items-center justify-center px-6 py-2.5 font-semibold">
-                  <a onClick={logout}>Logout</a>
+                  <button onClick={logout}>Logout</button>
                 </li>
               </>
             ) : (
