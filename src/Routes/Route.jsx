@@ -12,6 +12,7 @@ import PaymentSuccessful from "../Stripe/PaymentSuccessful";
 import BlogDetails from "../Components/Blog/BlogDetails";
 import Dashboard from "../Dashboard/Dashboard";
 import Profile from "../DBcomponents/Profile";
+import AdminDashboard from "../DBcomponents/AdminDashboard/AdminDashboard";
 
 export const route = createBrowserRouter([
     {
@@ -61,6 +62,10 @@ export const route = createBrowserRouter([
         path:"/dashboard",
         element:<Dashboard/>,
         children:[
+            {
+                path:'/dashboard',
+                element:<AdminDashboard/>
+            },
             {
              path:'profile',
              element:<Profile/>   
