@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxios from "../../Hooks/useAxios";
+import { Link } from "react-router-dom";
 
 export default function Table() {
     const axios = useAxios()
@@ -51,7 +52,7 @@ export default function Table() {
                                             </thead>
                                             {subscriptions.map((data, idx) => (<tbody key={idx} className="bg-white divide-y divide-gray-200">
                                                 <tr>
-                                                    {console.log(data.subscriptionPlan.name)}
+                                                    {console.log(data)}
 
                                                     <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                         <p>{data?.email}</p>
@@ -90,7 +91,7 @@ export default function Table() {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                         <div className="flex space-x-4 justify-center ">
-                                                            <a href="#" className="text-blue-500 hover:text-blue-600">
+                                                            <Link to={`/dashboard/edit/${data?._id}`}  className="text-blue-500 hover:text-blue-600">
                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                     className="w-5 h-5 mr-1"
                                                                     fill="none" viewBox="0 0 24 24"
@@ -101,7 +102,7 @@ export default function Table() {
                                                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                                 </svg>
                                                                 <p>Edit</p>
-                                                            </a>
+                                                            </Link>
                                                             <a href="#" className="text-red-500 hover:text-red-600">
                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                     className="w-5 h-5 mr-1 ml-3"
@@ -121,6 +122,7 @@ export default function Table() {
                                                     </td>
                                                 </tr>
                                             </tbody>))}
+                                            {/* <EditModal/> */}
                                         </table>
                                     </div>
                                 </div>

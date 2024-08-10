@@ -13,6 +13,7 @@ import BlogDetails from "../Components/Blog/BlogDetails";
 import Dashboard from "../Dashboard/Dashboard";
 import Profile from "../DBcomponents/Profile";
 import AdminDashboard from "../DBcomponents/AdminDashboard/AdminDashboard";
+import EditUser from "../DBcomponents/AdminDashboard/EditUser";
 
 export const route = createBrowserRouter([
     {
@@ -59,16 +60,21 @@ export const route = createBrowserRouter([
     },
     // dashboard
     {
-        path:"/dashboard",
-        element:<Dashboard/>,
-        children:[
+        path: "/dashboard",
+        element: <Dashboard />,
+        children: [
             {
-                path:'/dashboard',
-                element:<AdminDashboard/>
+                path: '/dashboard',
+                element: <AdminDashboard />
             },
             {
-             path:'profile',
-             element:<Profile/>   
+                path: 'profile',
+                element: <Profile />
+            },
+            {
+                path: "/dashboard/edit/:id",
+                element: <EditUser />,
+              loader:({params})=> fetch(`http://localhost:5000/users/${params.id}`)
             }
         ]
     },

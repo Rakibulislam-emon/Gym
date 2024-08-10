@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 export default function Membership() {
-    
+
     const navigate = useNavigate();
 
     const membershipPlans = [
