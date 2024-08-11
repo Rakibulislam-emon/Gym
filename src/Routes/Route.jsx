@@ -11,10 +11,11 @@ import Payment from "../Stripe/Payment";
 import PaymentSuccessful from "../Stripe/PaymentSuccessful";
 import BlogDetails from "../Components/Blog/BlogDetails";
 import Dashboard from "../Dashboard/Dashboard";
-import Profile from "../DBcomponents/Profile";
+// import Profile from "../DBcomponents/Profile";
 import AdminDashboard from "../DBcomponents/AdminDashboard/AdminDashboard";
 import EditUser from "../DBcomponents/AdminDashboard/EditUser";
-
+import SubscriptionLists from "../DBcomponents/UserDashboard/SubscriptionLists";
+import ClassTimeTable from '../Components/Clasess/ClassTimeTable'
 export const route = createBrowserRouter([
     {
         path: "/",
@@ -67,15 +68,21 @@ export const route = createBrowserRouter([
                 path: '/dashboard',
                 element: <AdminDashboard />
             },
-            {
-                path: 'profile',
-                element: <Profile />
-            },
+         
             {
                 path: "/dashboard/edit/:id",
                 element: <EditUser />,
-              loader:({params})=> fetch(`http://localhost:5000/users/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/users/${params.id}`)
+            },
+            // users 
+
+            {
+                path: 'subscriptionLists', element: <SubscriptionLists />
+            },
+            {
+                path: 'classTimeTable', element: <ClassTimeTable />
             }
+          
         ]
     },
 

@@ -22,6 +22,8 @@ const UserProfileUpdate = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    console.log(file);
+   
     if (file) {
       setFile(URL.createObjectURL(file));
       setProfilePic(URL.createObjectURL(file));

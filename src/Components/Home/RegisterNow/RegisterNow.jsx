@@ -22,7 +22,8 @@ export default function RegisterNow() {
                 username,
                 email,
                 password,
-                phone
+                phone,
+                role:'user'
             }
             console.log(userInfo);
             await createUser(email, password)

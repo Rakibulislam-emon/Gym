@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import useAxios from '../Hooks/useAxios';
+import { useQuery } from '@tanstack/react-query';
+import useAuth from '../Hooks/useAuth';
 // import AdminDashboard from './AdminDashboard/AdminDashboard';
 // import Table from './AdminDashboard/Table';
 
 const Sidebar = () => {
+  const axios = useAxios()
+  const { user } = useAuth()
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -16,6 +21,18 @@ const Sidebar = () => {
     }
   };
 
+  // get all users 
+  const { data: users = [] } = useQuery({
+    queryKey: ['allUsers'],
+    queryFn: async () => {
+      const response = await axios.get('/users');
+      return response.data;
+    },
+    refetchInterval: 1000, // refetch every 10 seconds
+  })
+  const matchedEmail = users.find(u => u.email === user?.email)
+  const role = matchedEmail?.role
+  // console.log('role:', role)
   return (
     <div className="bg-gray-100" onClick={closeSidebar}>
       <div className="h-screen flex overflow-hidden bg-gray-200">
@@ -38,14 +55,26 @@ const Sidebar = () => {
                   <span className="ml-2">Dashboard</span>
                 </Link>
               </li>
-              <li>
-                <Link
-                  to={'/dashboard/profile'}
-                  className="flex items-center p-2 text-lg rounded-md hover:bg-indigo-500 transition duration-300"
-                >
-                  <span className="ml-2">My Profile</span>
-                </Link>
-              </li>
+
+
+              {role === 'user' && <>
+                <li>
+                  <Link
+                    to={'/dashboard/subscriptionLists'}
+                    className="flex items-center p-2 text-lg rounded-md hover:bg-indigo-500 transition duration-300"
+                  >
+                    <span className="ml-2">Subscription Lists</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={'/dashboard/classTimeTable'}
+                    className="flex items-center p-2 text-lg rounded-md hover:bg-indigo-500 transition duration-300"
+                  >
+                    <span className="ml-2">Classes</span>
+                  </Link>
+                </li>
+              </>}
             </ul>
           </div>
         </div>

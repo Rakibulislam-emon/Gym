@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import toast from 'react-hot-toast';
+import { useLoaderData, useNavigate } from "react-router-dom";
 import useAxios from "../../Hooks/useAxios";
 
 export default function EditUser() {
+    const navigation = useNavigate()
     const axios = useAxios()
     const data = useLoaderData();
     const [email, setEmail] = useState(data.email);
@@ -14,39 +16,35 @@ export default function EditUser() {
     const handleSave = async (id) => {
         // Logic to update the data in the database
 
-
+        console.log(id);
         try {
             const updatedData = {
-                email,
+                email: email,
                 subscriptionPlan: {
                     name: planName,
-                    price,
-                    features,
+                    price: price,
+                    features: features,
                 },
-                status,
-            }
-
+                status: status,
+            };
             const res = await axios.patch(`/users/${id}`, updatedData)
-            console.log('updated data:', res.data)
+            console.log('updated data:', res.data.modifiedCount)
+            if (res.data.modifiedCount > 0) {
+                toast.success('updated successful')
+                navigation('/dashboard')
+            }
         } catch (error) {
             console.log('error:', error)
 
         }
-
-        console.log({
-            email,
-            subscriptionPlan: {
-                name: planName,
-                price,
-                features,
-            },
-            status,
-        });
     };
 
     return (
         <div className="px-4 py-16">
             <h1 className="text-center font-bold text-5xl">EDIT MEMBERSHIP PLANS</h1>
+           
+
+
             <div className="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
                     <div className="flex flex-col items-center aspect-auto p-4 sm:p-8 border rounded-3xl bg-gray-800 border-gray-700 shadow-gray-600/10 shadow-none m-2 flex-1 max-w-md">
@@ -84,7 +82,7 @@ export default function EditUser() {
                             onChange={(e) => setStatus(e.target.value)}
                         >
                             <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="blocked">Blocked</option>
                         </select>
                         <button
                             onClick={() => handleSave(data._id)}
