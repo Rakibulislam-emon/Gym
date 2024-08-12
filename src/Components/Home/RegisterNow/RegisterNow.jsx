@@ -16,7 +16,6 @@ export default function RegisterNow() {
         const email = form.email.value;
         const password = form.password.value;
         const phone = form.mobile.value;
-
         try {
             const userInfo = {
                 username,

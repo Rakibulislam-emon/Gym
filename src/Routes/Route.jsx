@@ -68,7 +68,7 @@ export const route = createBrowserRouter([
                 path: '/dashboard',
                 element: <AdminDashboard />
             },
-         
+
             {
                 path: "/dashboard/edit/:id",
                 element: <EditUser />,
@@ -82,7 +82,7 @@ export const route = createBrowserRouter([
             {
                 path: 'classTimeTable', element: <ClassTimeTable />
             }
-          
+
         ]
     },
 

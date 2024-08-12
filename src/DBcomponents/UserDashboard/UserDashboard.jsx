@@ -5,7 +5,7 @@ import useAuth from "../../Hooks/useAuth";
 export default function UserDashboard() {
     const axios = useAxios();
     const { user } = useAuth();
-    console.log('user:', user?.email);
+    // console.log('user:', user?.email);
 
     const { data: subscriptions = [] } = useQuery({
         queryKey: ['subscriptions'],
@@ -15,6 +15,7 @@ export default function UserDashboard() {
         },
         refetchInterval: 10000, // refetch every 10 seconds
     });
+    // console.log(subscriptions);
     const { data: users = [] } = useQuery({
         queryKey: ['allUsers'],
         queryFn: async () => {

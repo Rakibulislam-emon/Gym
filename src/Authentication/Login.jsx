@@ -2,19 +2,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../Hooks/useAuth";
 import toast from "react-hot-toast";
+import useAxios from "../Hooks/useAxios";
 
 export default function Login() {
+  const axios = useAxios();
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
 
-  // handle login 
   const handleLogin = async (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    
+
+    // Use the state variable for rememberMe
+    console.log('Remember Me:', rememberMe);
+
     // Ensure rememberMe checkbox is set correctly
     if (!rememberMe) {
       toast.error('Please check the "Remember Me" box if you want to stay signed in.');
@@ -28,11 +32,29 @@ export default function Login() {
     console.log('User Info:', userInfo);
 
     try {
+      // Ensure signIn is handled properly
       await signIn(email, password);
+
+      // Make sure you only make the request if signIn was successful
+      const res = await axios.post('/login', userInfo);
+      const { token } = res.data;
+      localStorage.setItem('token', token);
+      // Handle successful login (e.g., save token, navigate)
       toast.success('Logged in successfully');
-      navigate('/');
+      navigate('/'); // Navigate to the desired route
+
     } catch (error) {
-      toast.error(`Error: ${error.message}`);
+      // Handle errors from signIn and axios.post
+      if (error.response) {
+        // Server responded with an error
+        toast.error(`Error: ${error.response.data.message || error.message}`);
+      } else if (error.request) {
+        // Request was made but no response received
+        toast.error('Network error. Please try again later.');
+      } else {
+        // Something went wrong in setting up the request
+        toast.error(`Error: ${error.message}`);
+      }
     }
   };
 
@@ -79,7 +101,7 @@ export default function Login() {
 
           <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
             <div className="flex items-center">
-              <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" onChange={() => setRememberMe(!rememberMe)} />
+              <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} />
               <label htmlFor="remember-me" className="ml-3 block text-sm text-gray-800">
                 Remember me
               </label>
@@ -103,22 +125,11 @@ export default function Login() {
             <hr className="w-full border-gray-300" />
           </div>
 
-          <button type="button" className="w-full flex items-center justify-center gap-4 py-2.5 px-4 text-sm tracking-wide text-gray-800 border border-gray-300 rounded-md bg-transparent hover:bg-gray-50 focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20px" className="inline" viewBox="0 0 512 512">
-              <path fill="#fbbd00"
-                d="M120 256c0-25.367 6.989-49.13 19.131-69.477v-86.308H52.823C18.568 144.703 0 198.922 0 256s18.568 111.297 52.823 155.785h86.308v-86.308C126.989 305.13 120 281.367 120 256z"
-                data-original="#fbbd00" />
-              <path fill="#0f9d58"
-                d="m256 392-60 60 60 60c57.079 0 111.297-18.568 155.785-52.823v-86.216h-86.216C305.044 385.147 281.181 392 256 392z"
-                data-original="#0f9d58" />
-              <path fill="#31aa52"
-                d="M256 392v-80.93L362.569 304 256 296.842v-86.216h86.216l69.477-34.738 60-60-60-60C367.297 18.568 313.078 0 256 0c-30.653 0-60.444 5.672-88.846 16.89L120 120.215c14.134-14.135 33.73-21.611 54.215-21.611C236.86 98.604 264 125.744 264 158.66c0 20.485-7.476 40.081-21.611 54.215-13.919 13.919-32.057 21.611-54.215 21.611v86.216H248.931V392z"
-                data-original="#31aa52" />
-              <path fill="#3c79e6"
-                d="M256 296.842h86.216l69.477-34.738V120.215c-44.488-34.255-98.706-52.823-155.785-52.823V120c29.86 0 54.303 24.443 54.303 54.303 0 29.86-24.443 54.303-54.303 54.303V296.842z"
-                data-original="#3c79e6" />
+          <button type="button" className="w-full py-2.5 px-4 text-sm tracking-wide rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none">
+            <svg className="w-5 h-5 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M23 12l-8-8v5H3v6h12v5z" />
             </svg>
-            <span className="block">Sign in with Google</span>
+            <span className="ml-2">Sign in with Google</span>
           </button>
         </form>
       </div>

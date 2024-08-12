@@ -28,7 +28,7 @@ export default function AdminDashboard() {
   // console.log(users);
  
 const compare = users.find(u => u.email === user?.email)
-  console.log('compare:', compare)
+  // console.log('compare:', compare)
   const role = compare?.role
   console.log('role:', role)
   return (

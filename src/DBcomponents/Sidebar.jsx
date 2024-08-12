@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import useAxios from '../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../Hooks/useAuth';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
 // import AdminDashboard from './AdminDashboard/AdminDashboard';
 // import Table from './AdminDashboard/Table';
 
@@ -10,6 +11,21 @@ const Sidebar = () => {
   const axios = useAxios()
   const { user } = useAuth()
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+  // testing purpose
+  const axiosSecure = useAxiosSecure()
+
+  const { data: test = [] } = useQuery({
+    queryKey: ['allUsers'],
+    queryFn: async () => {
+      const response = await axiosSecure.get('/users');
+      return response.data;
+    },
+    // refetchInterval: 1000, // refetch every 10 seconds
+  })
+  console.log(test);
+
+
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -28,11 +44,12 @@ const Sidebar = () => {
       const response = await axios.get('/users');
       return response.data;
     },
-    refetchInterval: 1000, // refetch every 10 seconds
+    // refetchInterval: 1000, // refetch every 10 seconds
   })
+
   const matchedEmail = users.find(u => u.email === user?.email)
   const role = matchedEmail?.role
-  // console.log('role:', role)
+
   return (
     <div className="bg-gray-100" onClick={closeSidebar}>
       <div className="h-screen flex overflow-hidden bg-gray-200">
