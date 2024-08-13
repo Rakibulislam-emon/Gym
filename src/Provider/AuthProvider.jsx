@@ -47,7 +47,7 @@ const AuthProvider = ({ children }) => {
      const logout = () => {
         setLoading(true)
         toast.success('logout successful')
-
+        localStorage.removeItem('token')
         return signOut(auth) 
      }
     // const logOut = async () => {

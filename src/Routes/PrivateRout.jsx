@@ -17,9 +17,9 @@ const PrivateRoute = ({ children }) => {
 
     if (loading) return <span className="loading loading-spinner loading-lg"></span>;
     if (token) return children;
-    
 
-    return <Navigate to='/login' state={{ from: location }} replace />;
+
+    return <Navigate to='/login' state={{ from: location }} replace={true} />;
 };
 
 PrivateRoute.propTypes = {

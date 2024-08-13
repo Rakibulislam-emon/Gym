@@ -16,6 +16,7 @@ import AdminDashboard from "../DBcomponents/AdminDashboard/AdminDashboard";
 import EditUser from "../DBcomponents/AdminDashboard/EditUser";
 import SubscriptionLists from "../DBcomponents/UserDashboard/SubscriptionLists";
 import ClassTimeTable from '../Components/Clasess/ClassTimeTable'
+import PrivateRoute from "./PrivateRout";
 export const route = createBrowserRouter([
     {
         path: "/",
@@ -28,7 +29,7 @@ export const route = createBrowserRouter([
             },
             {
                 path: "/about",
-                element: <About />
+                element: <PrivateRoute><About /></PrivateRoute>
             },
             {
                 path: "/classes",
@@ -66,7 +67,7 @@ export const route = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
-                element: <AdminDashboard />
+                element: <PrivateRoute><AdminDashboard /></PrivateRoute>
             },
 
             {

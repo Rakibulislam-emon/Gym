@@ -1,29 +1,24 @@
-import {  useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
-import useAxios from '../Hooks/useAxios';
-import { useQuery } from '@tanstack/react-query';
-import useAuth from '../Hooks/useAuth';
-import useAxiosSecure from '../Hooks/useAxiosSecure';
-// import AdminDashboard from './AdminDashboard/AdminDashboard';
-// import Table from './AdminDashboard/Table';
+import { useState } from 'react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
+import { jwtDecode } from "jwt-decode";
+import useAuth from '../Hooks/useAuth';
 const Sidebar = () => {
-  const axios = useAxios()
-  const { user } = useAuth()
+  const navigate = useNavigate()
+  const { logout } = useAuth()
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  // testing purpose
-  const axiosSecure = useAxiosSecure()
+  const logOut = () => {
+    logout()
+    navigate('/login')
+  }
 
-  const { data: test = [] } = useQuery({
-    queryKey: ['allUsers'],
-    queryFn: async () => {
-      const response = await axiosSecure.get('/users');
-      return response.data;
-    },
-    // refetchInterval: 1000, // refetch every 10 seconds
-  })
-  console.log(test);
+  // decoding jwt
+  const token = localStorage.getItem('token')
+
+  const decode = jwtDecode(token);
+
+  const role = decode?.userRole
 
 
 
@@ -37,18 +32,6 @@ const Sidebar = () => {
     }
   };
 
-  // get all users 
-  const { data: users = [] } = useQuery({
-    queryKey: ['allUsers'],
-    queryFn: async () => {
-      const response = await axios.get('/users');
-      return response.data;
-    },
-    // refetchInterval: 1000, // refetch every 10 seconds
-  })
-
-  const matchedEmail = users.find(u => u.email === user?.email)
-  const role = matchedEmail?.role
 
   return (
     <div className="bg-gray-100" onClick={closeSidebar}>
@@ -92,6 +75,14 @@ const Sidebar = () => {
                   </Link>
                 </li>
               </>}
+              <li>
+                <button
+                  onClick={logOut}
+                  className="flex items-center p-2 text-lg rounded-md hover:bg-indigo-500 transition duration-300"
+                >
+                  <span className="ml-2">Logout</span>
+                </button>
+              </li>
             </ul>
           </div>
         </div>

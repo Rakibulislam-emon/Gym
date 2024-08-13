@@ -7,10 +7,10 @@ export default function EditUser() {
     const navigation = useNavigate()
     const axios = useAxios()
     const data = useLoaderData();
-    const [email, setEmail] = useState(data.email);
-    const [planName, setPlanName] = useState(data.subscriptionPlan.name);
-    const [price, setPrice] = useState(data.subscriptionPlan.price);
-    const [features, setFeatures] = useState(data.subscriptionPlan.features);
+    const [email, setEmail] = useState(data?.email);
+    const [planName, setPlanName] = useState(data.subscriptionPlan?.name);
+    const [price, setPrice] = useState(data.subscriptionPlan?.price);
+    const [features, setFeatures] = useState(data.subscriptionPlan?.features);
     const [status, setStatus] = useState(data.status);
 
     const handleSave = async (id) => {
@@ -72,7 +72,7 @@ export default function EditUser() {
                         <label className="text-lg sm:text-xl font-medium text-white mb-2">Features</label>
                         <textarea
                             className="mb-4 px-3 py-2 rounded-md bg-gray-700 text-white w-full"
-                            value={features.join('\n')}
+                            value={features?.join('\n')}
                             onChange={(e) => setFeatures(e.target.value.split('\n'))}
                         />
                         <label className="text-lg sm:text-xl font-medium text-white mb-2">Status</label>

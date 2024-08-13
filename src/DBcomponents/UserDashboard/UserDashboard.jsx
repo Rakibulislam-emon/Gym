@@ -32,7 +32,7 @@ export default function UserDashboard() {
 
     // If no subscription is found, return null or show a message
     if (!userSubscription) {
-        return <div>No subscription found for this user.</div>;
+        return <div className="text-center">No subscription found for this user.</div>;
     }
     // Destructure the subscription plan details
     const { name, price, features } = userSubscription.subscriptionPlan;

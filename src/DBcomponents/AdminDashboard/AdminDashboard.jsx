@@ -1,12 +1,22 @@
-import useAuth from "../../Hooks/useAuth";
-import useAxios from "../../Hooks/useAxios";
+
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import UserDashboard from "../UserDashboard/UserDashboard";
 import Table from "./Table";
 import { useQuery } from '@tanstack/react-query'
+import { jwtDecode } from "jwt-decode";
 
 export default function AdminDashboard() {
-  const {user} = useAuth()
-  const axios = useAxios()
+  
+  const axios = useAxiosSecure()
+
+  // decoding jwt
+  const token = localStorage.getItem('token')
+  
+  const decode = jwtDecode(token);
+ 
+  const role = decode?.userRole
+  
+
   // get all users 
   const { data: users = [] } = useQuery({
     queryKey: ['allUsers'],
@@ -24,13 +34,10 @@ export default function AdminDashboard() {
     },
     refetchInterval: 10000, // refetch every 10 seconds
   })
+  // console.log(subscriptions);
   const totalPrice = subscriptions.reduce((sum, { subscriptionPlan: { price } }) => sum + price, 0);
   // console.log(users);
- 
-const compare = users.find(u => u.email === user?.email)
-  // console.log('compare:', compare)
-  const role = compare?.role
-  console.log('role:', role)
+
   return (
     <div className="mt-12">
       {role === 'admin' ? <>
@@ -80,7 +87,7 @@ const compare = users.find(u => u.email === user?.email)
           </div>
         </div>
         <Table />
-      </> : <UserDashboard/> }
+      </> : <UserDashboard />}
 
 
 
