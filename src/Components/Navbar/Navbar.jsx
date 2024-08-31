@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from "../../assets/img/logo.png";
+import logo from "/logo2.png";
 import useAuth from '../../Hooks/useAuth';
 
 export default function Navbar() {
   const { user, logout } = useAuth()
-  console.log('user:', user)
+  // console.log('user:', user)
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems = [
@@ -24,7 +24,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           <button>
             <div className="flex items-center space-x-2">
-              <img src={logo} alt="Company Logo" />
+              <img className='size-16' src={logo} alt="Company Logo" />
             </div>
           </button>
           <div className="hidden lg:block">

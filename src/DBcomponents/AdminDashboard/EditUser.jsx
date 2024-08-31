@@ -1,11 +1,11 @@
 import { useState } from "react";
 import toast from 'react-hot-toast';
 import { useLoaderData, useNavigate } from "react-router-dom";
-import useAxios from "../../Hooks/useAxios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 export default function EditUser() {
     const navigation = useNavigate()
-    const axios = useAxios()
+    const axios = useAxiosSecure()
     const data = useLoaderData();
     const [email, setEmail] = useState(data?.email);
     const [planName, setPlanName] = useState(data.subscriptionPlan?.name);
@@ -16,7 +16,7 @@ export default function EditUser() {
     const handleSave = async (id) => {
         // Logic to update the data in the database
 
-        console.log(id);
+        // console.log(id);
         try {
             const updatedData = {
                 email: email,
@@ -34,8 +34,8 @@ export default function EditUser() {
                 navigation('/dashboard')
             }
         } catch (error) {
-            console.log('error:', error)
-
+            // console.log('error:', error)
+            alert('error:', error)
         }
     };
 

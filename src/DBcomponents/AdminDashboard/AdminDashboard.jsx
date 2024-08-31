@@ -6,16 +6,17 @@ import { useQuery } from '@tanstack/react-query'
 import { jwtDecode } from "jwt-decode";
 
 export default function AdminDashboard() {
-  
+
   const axios = useAxiosSecure()
 
   // decoding jwt
   const token = localStorage.getItem('token')
-  
+
   const decode = jwtDecode(token);
- 
+
   const role = decode?.userRole
-  
+
+
 
   // get all users 
   const { data: users = [] } = useQuery({
@@ -32,16 +33,19 @@ export default function AdminDashboard() {
       const response = await axios.get('/subscriptions');
       return response.data;
     },
-    refetchInterval: 10000, // refetch every 10 seconds
+    // refetchInterval: 10000, // refetch every 10 seconds
   })
   // console.log(subscriptions);
-  const totalPrice = subscriptions.reduce((sum, { subscriptionPlan: { price } }) => sum + price, 0);
+  const totalPrice = subscriptions?.reduce((sum, { subscriptionPlan: { price } }) => sum + price, 0);
   // console.log(users);
 
   return (
     <div className="mt-12">
       {role === 'admin' ? <>
-        <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+
+        <h1 className="text-center text-5xl my-8">welcome {role}</h1>
+
+        <div className="mb-12  grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
           {/* Total Members */}
           <div className="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
             <div className="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
@@ -88,10 +92,6 @@ export default function AdminDashboard() {
         </div>
         <Table />
       </> : <UserDashboard />}
-
-
-
-
     </div>
   );
 }

@@ -1,63 +1,37 @@
-// import axios from "axios";
-
-// export default function useAxiosSecure() {
-//   const axiosSecure = axios.create({
-//     baseURL: 'http://localhost:5000',
-
-//     // Add a request interceptor
-// ax.interceptors.request.use(function (config) {
-//     // Do something before request is sent
-//     return config;
-//   }, function (error) {
-//     // Do something with request error
-//     return Promise.reject(error);
-//   })
-
-//   })
-// }
-
-
-import axios from "axios";
-// import { useNavigate } from "react-router-dom";
-// import useAuth from "./useAuth";
+// Setting up Axios in a React.js project
+import axios from 'axios';
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000'
-})
+  baseURL: `${import.meta.env.VITE_API_URL}`,
+});
+
+// Add global request interceptor
+axiosSecure.interceptors.request.use(
+  (config) => {
+    // Modify request config here, e.g., add headers
+    const token = localStorage.getItem('token');
+    if(token){
+    
+      config.headers.authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Add global response interceptor
+axiosSecure.interceptors.response.use(
+  (response) => {
+    // Modify response data here, if needed
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 const useAxiosSecure = () => {
-    // const navigate = useNavigate();
-    // const { logOut } = useAuth();
-
-    // request interceptor to add authorization header for every secure call to teh api
-    axiosSecure.interceptors.request.use(function (config) {
-        console.log('config:', config)
-        const token = localStorage.getItem('token')
-        console.log('token:', token)
-        // console.log('request stopped by interceptors', token)
-        config.headers.authorization = `Bearer ${token}`;
-        return config;
-    }, function (error) {
-        // Do something with request error
-        return Promise.reject(error);
-    });
-
-
-    // // intercepts 401 and 403 status
-    // axiosSecure.interceptors.response.use(function (response) {
-    //     return response;
-    // }, async (error) => {
-    //     const status = error.response.status;
-    //     // console.log('status error in the interceptor', status);
-    //     // for 401 or 403 logout the user and move the user to the login
-    //     if (status === 401 || status === 403) {
-    //         await logOut();
-    //         navigate('/login');
-    //     }
-    //     return Promise.reject(error);
-    // })
-
-
-    return axiosSecure;
-};
-
+  return axiosSecure;
+}
 export default useAxiosSecure;

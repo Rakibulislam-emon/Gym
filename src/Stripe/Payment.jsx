@@ -25,7 +25,7 @@ export default function Payment() {
     console.log(info);
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://gym-omega-black.vercel.app/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ price: price }),
@@ -50,7 +50,7 @@ export default function Payment() {
                     <CheckoutForm info={info} />
                 </Elements>
             )}
-           
+
         </div>
     );
 }

@@ -24,7 +24,7 @@ export default function RegisterNow() {
                 phone,
                 role:'user'
             }
-            console.log(userInfo);
+            // console.log(userInfo);
             await createUser(email, password)
             if (!userInfo) {
                 toast.error('userInfo required')
@@ -35,7 +35,7 @@ export default function RegisterNow() {
             }
 
         } catch (error) {
-            console.log('error:', error)
+            // console.log('error:', error)
             toast.error('error', error.message)
         }
     }

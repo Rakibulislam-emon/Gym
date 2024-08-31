@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../Hooks/useAxios";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { CgUnblock } from "react-icons/cg";
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { jwtDecode } from 'jwt-decode';
+
 
 export default function Table() {
-    const axios = useAxios();
+
+    
+    const axiosSecureInstance = useAxiosSecure();
+    const token = localStorage.getItem('token')
+
+    const decode = jwtDecode(token);
+
+    const userEmail = decode?.userEmail
+
+    // Memoize axios instance to prevent unnecessary re-renders
+    const axios = useMemo(() => axiosSecureInstance, [axiosSecureInstance]);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all'); // State for filtering by status
 
@@ -17,15 +30,15 @@ export default function Table() {
             const response = await axios.get('/subscriptions');
             return response.data;
         },
-        refetchInterval: 10000,
+        // refetchInterval: 10000,
         onError: (error) => {
             console.error('Error fetching subscriptions:', error);
         },
         onSuccess: () => {
             console.log('Subscriptions fetched successfully');
         },
-        refetchOnWindowFocus: false,
-        staleTime: 5000,
+        // refetchOnWindowFocus: false,
+        // staleTime: 5000,
     });
 
     const { data: users = [] } = useQuery({
@@ -34,36 +47,27 @@ export default function Table() {
             const response = await axios.get('/users');
             return response.data;
         },
-        refetchInterval: 10000, // refetch every 10 seconds
+        // refetchInterval: 10000, // refetch every 10 seconds
     });
 
-    const getUserNameByEmail = (email, users) => {
-        
-        // Find the user object that matches the email
+    const getUserNameByEmail = (email) => {
         const user = users.find(user => user.email === email);
-        
-        // Log user object for debugging
-    
-        // Access the username property or default to 'Unknown'
-        const userName = user?.username || 'Unknown';
-    
-    
-        return userName;
+        return user?.username || 'Unknown';
     };
-    
-    // Update status of subscription 
+
     const handleStatusChange = async (id, status) => {
         try {
             await axios.patch(`/users/${id}`, { status });
             toast.success('Subscription updated successfully');
             refetch();
         } catch (error) {
-            console.error('Error updating subscription status:', error);
+            console.error('Error updating subscription status:', error.message);
+            toast.error('Failed to update subscription status');
         }
     };
 
-    // Delete subscription
     const handleDeleteSubscription = async (id) => {
+
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -79,14 +83,13 @@ export default function Table() {
                     Swal.fire("Deleted!", "The subscription has been deleted.", "success");
                     refetch();
                 } catch (error) {
-                    console.error('Error deleting subscription:', error);
+                    console.error('Error deleting subscription:', error.response ? error.response.data : error.message);
                     Swal.fire("Error!", "There was an error deleting the subscription.", "error");
                 }
             }
         });
     };
 
-    // Filter subscriptions based on search query and status
     const filteredSubscriptions = subscriptions.filter(sub =>
         (sub.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
             sub.subscriptionPlan?.name.toLowerCase().includes(searchQuery.toLowerCase())) &&
@@ -140,7 +143,7 @@ export default function Table() {
                                         {filteredSubscriptions.map((data, idx) => (
                                             <tr key={idx}>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{data?.email}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{getUserNameByEmail(data?.email, users)}</td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{getUserNameByEmail(data?.email)}</td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                     <div className={`flex items-center ${data?.status === 'active' ? 'text-green-500' : 'text-red-500'}`}>
                                                         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -160,26 +163,37 @@ export default function Table() {
                                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                     <div className="flex space-x-4">
                                                         <Link to={`/dashboard/edit/${data?._id}`} className="text-blue-500 hover:text-blue-700 flex items-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 5l7 7-7 7-7-7 7-7z" />
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12l-3-3m0 0l-3 3m3-3v12" />
                                                             </svg>
                                                             Edit
                                                         </Link>
+                                                        <>
+                                                           {data?.status === 'active' ?
+                                                                <button
+                                                                    onClick={() => handleStatusChange(data?._id, 'blocked')}
+                                                                    className="text-red-500 hover:text-red-700 flex items-center"
+                                                                >
+                                                                    <CgUnblock className="mr-1" size={16} />
+                                                                    Block
+                                                                </button> : <button
+                                                                    onClick={() => handleStatusChange(data?._id, 'active')}
+                                                                    className="text-green-500 hover:text-green-700 flex items-center"
+                                                                >
+                                                                    <CgUnblock className="mr-1" size={16} />
+                                                                    active
+                                                                </button>
+                                                            }
+                                                        </>
                                                         <button
-                                                            onClick={() => handleDeleteSubscription(data?._id)}
-                                                            className="text-red-500 hover:text-red-700 flex items-center"
+                                                            onClick={() => handleDeleteSubscription(data?._id, data?.email)}
+                                                            className={`flex items-center ${data?.email === userEmail ? 'text-gray-400 cursor-not-allowed' : 'text-red-500 hover:text-red-700'}`}
+                                                            disabled={data?.email === userEmail}
                                                         >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                                                             </svg>
                                                             Delete
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleStatusChange(data?._id, data?.status === 'active' ? 'blocked' : 'active')}
-                                                            className={`text-green-500 hover:text-green-700 flex items-center ${data?.status === 'active' ? 'text-red-500' : 'text-green-500'}`}
-                                                        >
-                                                            <CgUnblock className="h-5 w-5" />
-                                                            {data?.status === 'active' ? 'Block' : 'Unblock'}
                                                         </button>
                                                     </div>
                                                 </td>

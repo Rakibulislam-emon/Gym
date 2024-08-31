@@ -16,6 +16,7 @@ const Sidebar = () => {
   // decoding jwt
   const token = localStorage.getItem('token')
 
+
   const decode = jwtDecode(token);
 
   const role = decode?.userRole
@@ -45,7 +46,7 @@ const Sidebar = () => {
         >
           {/* Sidebar Content */}
           <div className="p-6">
-            <Link to={'/'} className="text-3xl font-bold mb-6 text-indigo-400">PowerZone </Link>
+            <Link to={'/'} className="text-3xl font-bold mb-6 text-indigo-400">Flex Fitness </Link>
             <ul className="space-y-4 mt-4">
               <li>
                 <Link
@@ -95,7 +96,7 @@ const Sidebar = () => {
           <div className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 h-16 lg:h-20 shadow-lg"> {/* Adjust height as needed */}
             <div className="container mx-auto h-full flex items-center px-4 lg:px-8 text-white">
               <Link to={'/'} className="text-2xl lg:text-3xl font-bold tracking-wide">
-                PowerZone Fitness
+                Flex Fitness 
               </Link>
               <button
                 className="text-white hover:text-gray-200 lg:hidden ml-auto"

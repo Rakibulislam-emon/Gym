@@ -29,7 +29,7 @@ export const route = createBrowserRouter([
             },
             {
                 path: "/about",
-                element: <PrivateRoute><About /></PrivateRoute>
+                element: <About />
             },
             {
                 path: "/classes",
@@ -50,7 +50,7 @@ export const route = createBrowserRouter([
             },
             {
                 path: '/payment',
-                element: <Payment />
+                element: <PrivateRoute><Payment /></PrivateRoute>
             },
             {
                 path: '/payment-successful',
@@ -72,8 +72,8 @@ export const route = createBrowserRouter([
 
             {
                 path: "/dashboard/edit/:id",
-                element: <EditUser />,
-                loader: ({ params }) => fetch(`http://localhost:5000/users/${params.id}`)
+                element: <PrivateRoute><EditUser /></PrivateRoute>,
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/users/${params.id}`)
             },
             // users 
 

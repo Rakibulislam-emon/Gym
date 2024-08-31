@@ -24,15 +24,15 @@ export default function UserDashboard() {
         },
         refetchInterval: 10000, // refetch every 10 seconds
     })
-    console.log(users);
+    // console.log(users);
 
     // Find the subscription that matches the current user's email
     const userSubscription = subscriptions.find(sub => sub?.email === user?.email);
-    console.log('userSubscription:', userSubscription)
+    // console.log('userSubscription:', userSubscription)
 
     // If no subscription is found, return null or show a message
     if (!userSubscription) {
-        return <div className="text-center">No subscription found for this user.</div>;
+        return <div className="text-center">No subscription found for this user. </div>;
     }
     // Destructure the subscription plan details
     const { name, price, features } = userSubscription.subscriptionPlan;

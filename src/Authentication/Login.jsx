@@ -17,7 +17,7 @@ export default function Login() {
     const password = form.password.value;
 
     // Use the state variable for rememberMe
-    console.log('Remember Me:', rememberMe);
+    // console.log('Remember Me:', rememberMe);
 
     // Ensure rememberMe checkbox is set correctly
     if (!rememberMe) {
@@ -29,7 +29,7 @@ export default function Login() {
       email,
       password,
     };
-    console.log('User Info:', userInfo);
+    // console.log('User Info:', userInfo);
 
     try {
       // Ensure signIn is handled properly
