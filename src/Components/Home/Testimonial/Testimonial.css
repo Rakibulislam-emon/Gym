@@ -1,0 +1,25 @@
+/* Testimonial.css */
+.mySwiper .swiper-button-next,
+.mySwiper .swiper-button-prev {
+    color: #000;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.mySwiper .swiper-button-next {
+    right: 10%;
+}
+
+.mySwiper .swiper-button-prev {
+    left: 10%;
+}
+
+@media (max-width: 768px) {
+    .mySwiper .swiper-button-next {
+        right: 5%;
+    }
+
+    .mySwiper .swiper-button-prev {
+        left: 5%;
+    }
+}
