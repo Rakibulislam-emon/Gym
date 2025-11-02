@@ -12,7 +12,7 @@ import FooterBg from "../../Components/Home/FooterBg/FooterBg";
 
 export default function Home() {
   return (
-    <div>
+    <>
       <Hero />
       <StoryAboutUs/>
       <Services/>
@@ -24,6 +24,6 @@ export default function Home() {
       <RegisterNow/>
       <LeatestBlog/>
       <FooterBg/>
-    </div>
+    </>
   )
 }
