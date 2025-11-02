@@ -1,5 +1,6 @@
 import { FaDumbbell, FaFire, FaCalendarCheck, FaHeart } from 'react-icons/fa';
 import CountUp from 'react-countup';
+/* eslint-disable react/prop-types */
 
 export default function MiniStatWidget({ type, value, label, trend }) {
   const getIcon = () => {

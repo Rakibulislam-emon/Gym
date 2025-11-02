@@ -71,7 +71,7 @@ export default function AdminDashboard() {
           Admin Dashboard
         </h1>
         <p className="text-gray-400 text-lg">
-          Welcome back, {role}! Here's what's happening today.
+          Welcome back, {role}! Here you can see a summary of all the users and what s happening today.
         </p>
       </div>
 

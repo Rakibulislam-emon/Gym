@@ -1,6 +1,7 @@
 import { FaCrown, FaCalendarAlt, FaCheckCircle } from 'react-icons/fa';
+/* eslint-disable react/prop-types */
 
-export default function HeroSubscriptionCard({ subscription, userName }) {
+export default function HeroSubscriptionCard({ subscription, }) {
   const { subscriptionPlan, status, createdAt } = subscription;
   const { name, price, features } = subscriptionPlan;
 
