@@ -33,7 +33,7 @@ export default function Login() {
       const { token } = res.data;
       localStorage.setItem("token", token);
       toast.success("Welcome back! Signed in successfully");
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       if (error.response) {
         toast.error(`Error: ${error.response.data.message || error.message}`);
@@ -51,11 +51,6 @@ export default function Login() {
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-          className="w-full h-full object-cover"
-          alt="Abstract digital transformation background"
-        />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-purple-900/40 to-slate-900/80 backdrop-blur-[1px]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-slate-900/50 to-slate-900" />
       </div>
@@ -86,7 +81,7 @@ export default function Login() {
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
         <div className="grid lg:grid-cols-2 items-center gap-12 max-w-7xl w-full">
           {/* Left Side - Hero Content */}
-          <div className="text-center lg:text-left space-y-8 animate-fade-in-up">
+          <div className="text-center lg:text-left space-y-8 animate-fade-in-up border--">
             <div className="space-y-6">
               <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 animate-pulse-gentle">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
@@ -102,14 +97,14 @@ export default function Login() {
                 </span>
               </h1>
 
-              <p className="text-xl text-white/70 max-w-lg leading-relaxed">
+              <p className="text-xl text-white/70 max-w-lg leading-relaxed mx-auto lg:mx-0">
                 Access your personalized dashboard and continue where you left
                 off. Your adventure awaits.
               </p>
             </div>
 
             {/* Feature Points */}
-            <div className="grid grid-cols-2 gap-6 max-w-md">
+            <div className="grid  grid-cols-2 gap-6 max-w-md md:mx-auto lg:mx-0">
               {[
                 { icon: "📱", text: "Quick Access" },
                 { icon: "🔒", text: "Secure Login" },

@@ -1,22 +1,20 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 import logo from "/logo2.png";
-import useAuth from '../../Hooks/useAuth';
 
 export default function Navbar() {
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuth();
   // console.log('user:', user)
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems = [
-    { label: 'Home', path: '/' },
-    { label: 'About', path: '/about' },
-    { label: 'Classes', path: '/classes' },
-    { label: 'Blog', path: '/blog' },
-    { label: 'Contact', path: '/contact' },
+    { label: "Home", path: "/" },
+    { label: "About", path: "/about" },
+    { label: "Classes", path: "/classes" },
+    { label: "Blog", path: "/blog" },
+    { label: "Contact", path: "/contact" },
   ];
-
-
 
   return (
     <nav className="top-0 py-1 lg:py-2 w-full fixed lg:relative z-50 dark:bg-gray-900">
@@ -24,13 +22,19 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           <button>
             <div className="flex items-center space-x-2">
-              <img className='size-16' src={logo} alt="Company Logo" />
+              <Link to={"/"}>
+                {" "}
+                <img className="size-16" src={logo} alt="Company Logo" />
+              </Link>
             </div>
           </button>
           <div className="hidden lg:block">
             <ul className="flex space-x-10 text-base font-bold text-black/60 dark:text-white">
               {navItems.map((item, index) => (
-                <li key={index} className="hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
+                <li
+                  key={index}
+                  className="hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear"
+                >
                   <Link to={item.path}>{item.label}</Link>
                 </li>
               ))}
@@ -39,23 +43,31 @@ export default function Navbar() {
           <div className="hidden lg:flex lg:items-center gap-x-2">
             {user ? (
               <>
-                <Link to={'/dashboard'} className="flex border items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
+                <Link
+                  to={"/dashboard"}
+                  className="flex border items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold"
+                >
                   Dashboard
                 </Link>
                 <button
                   onClick={logout}
-                  className="flex border items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
+                  className="flex border items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold"
+                >
                   Logout
                 </button>
               </>
-
             ) : (
               <>
-                <Link to="/register" className="flex items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold">
+                <Link
+                  to="/register"
+                  className="flex items-center text-black dark:text-white justify-center px-6 py-2.5 font-semibold"
+                >
                   Sign up
                 </Link>
-                <Link to="/login"
-                  className="flex items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
+                <Link
+                  to="/login"
+                  className="flex items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200"
+                >
                   Login
                 </Link>
               </>
@@ -87,19 +99,23 @@ export default function Navbar() {
           </div>
         </div>
         <div
-          className={`lg:hidden fixed top-0 left-0 h-full w-64 bg-gray-800 text-white transform ${menuOpen ? 'translate-x-0' : '-translate-x-full'
-            } transition-transform duration-300 ease-in-out`}
+          className={`lg:hidden fixed top-0 left-0 h-full w-64 bg-gray-800 text-white transform ${
+            menuOpen ? "translate-x-0" : "-translate-x-full"
+          } transition-transform duration-300 ease-in-out`}
         >
           <ul className="flex flex-col space-y-4 mt-20 text-base font-bold">
             {navItems.map((item, index) => (
-              <li key={index} className="hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
+              <li
+                key={index}
+                className="hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear"
+              >
                 <Link to={item.path}>{item.label}</Link>
               </li>
             ))}
             {user ? (
               <>
                 <li className="flex items-center justify-center px-6 py-2.5 font-semibold">
-                  <Link to={'/dashboard'}>Dashboard</Link>
+                  <Link to={"/dashboard"}>Dashboard</Link>
                 </li>
                 <li className="flex items-center justify-center px-6 py-2.5 font-semibold">
                   <button onClick={logout}>Logout</button>
@@ -111,7 +127,7 @@ export default function Navbar() {
                   <Link to="/register">Sign up</Link>
                 </li>
                 <li className="flex items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
-                  <Link to="/login" >Login</Link>
+                  <Link to="/login">Login</Link>
                 </li>
               </>
             )}

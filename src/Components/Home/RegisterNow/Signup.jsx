@@ -26,7 +26,7 @@ export default function Signup() {
       const res = await axiosCommon.post("/users", userInfo);
       if (res.status === 200) {
         toast.success("Account created successfully!");
-        navigate("/login");
+        navigate("/dashboard");
       }
     } catch (error) {
       toast.error(error.message || "Registration failed");
@@ -84,14 +84,14 @@ export default function Signup() {
                 </span>
               </h1>
 
-              <p className="text-xl text-white/70 max-w-lg leading-relaxed">
+              <p className="text-xl text-white/70 max-w-lg leading-relaxed mx-auto lg:mx-0">
                 Join thousands of users and unlock premium features. Your
                 adventure begins here.
               </p>
             </div>
 
             {/* Feature Points - Updated for Registration */}
-            <div className="grid grid-cols-2 gap-6 max-w-md">
+            <div className="grid grid-cols-2 gap-6 max-w-md mx-auto lg:mx-0">
               {[
                 { icon: "💪", text: "Expert Training" },
                 { icon: "👥", text: "Community Support" },
