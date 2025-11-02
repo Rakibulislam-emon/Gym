@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import PropTypes from 'prop-types';
 

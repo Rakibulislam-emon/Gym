@@ -1,4 +1,5 @@
 import { FaUserPlus, FaClock, FaCheckCircle, FaBan } from 'react-icons/fa';
+/* eslint-disable react/prop-types */
 
 export default function RecentActivity({ subscriptions, users }) {
   // Get user name by email

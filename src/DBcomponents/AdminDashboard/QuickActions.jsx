@@ -1,5 +1,6 @@
 import { FaUserPlus, FaFileExport, FaSyncAlt, FaChartBar } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+/* eslint-disable react/prop-types */
 
 export default function QuickActions({ onRefresh }) {
   

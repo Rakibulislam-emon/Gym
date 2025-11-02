@@ -10,7 +10,6 @@ import StatusBadge from '../shared/StatusBadge';
 import ActionButton from '../shared/ActionButton';
 import LoadingSpinner from '../shared/LoadingSpinner';
 import EmptyState from '../shared/EmptyState';
-import { use } from 'react';
 
 export default function Table() {
   const axiosSecureInstance = useAxiosSecure();
@@ -160,6 +159,7 @@ export default function Table() {
   const totalPages = Math.ceil(filteredAndSortedData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedData = filteredAndSortedData.slice(startIndex, startIndex + itemsPerPage);
+/* eslint-disable react/prop-types */
 
   // Sort icon
   const SortIcon = ({ field }) => {
