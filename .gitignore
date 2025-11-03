@@ -6,7 +6,11 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+<<<<<<< HEAD
 
+=======
+git_disable
+>>>>>>> 46f2fea72613ec336d24f9a8b2286ba7653abdf3
 node_modules
 dist
 dist-ssr

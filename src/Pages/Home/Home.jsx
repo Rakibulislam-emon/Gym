@@ -12,7 +12,11 @@ import FooterBg from "../../Components/Home/FooterBg/FooterBg";
 
 export default function Home() {
   return (
+<<<<<<< HEAD
     <div>
+=======
+    <>
+>>>>>>> 46f2fea72613ec336d24f9a8b2286ba7653abdf3
       <Hero />
       <StoryAboutUs/>
       <Services/>
@@ -24,6 +28,10 @@ export default function Home() {
       <RegisterNow/>
       <LeatestBlog/>
       <FooterBg/>
+<<<<<<< HEAD
     </div>
+=======
+    </>
+>>>>>>> 46f2fea72613ec336d24f9a8b2286ba7653abdf3
   )
 }
